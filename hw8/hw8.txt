@@ -1,0 +1,82 @@
+---
+title: 'Homework 8'
+author: 'Rodrigo Valle'
+date: 'December 3, 2017'
+---
+
+# Problem 1
+
+---------------------------------------------------
+Parameter                                Constraint
+------------------------------------ --------------
+$\Pr$(Disease = true)                $\ge 0.008942$
+
+$\Pr$(Test = true | Disease = false) $\le 0.002219$
+
+$\Pr$(Test = false | Disease = true) N/A
+---------------------------------------------------
+
+Setting $\Pr$(Test = false | Disease = true) doesn't seem to have an effect
+significant enough to satisfy $\Pr$(Disease = true | Test = true) $\ge 0.3$ on
+its own.
+
+# Problem 2
+
+A) The answer can be found by selecting the value of "On" for the Light Sensor
+   variable, and the value of "Off" for the Sound Sensor variable, then using
+   SamIam's MPE function. Alternatively, one can select the value for each
+   remaining variable with the highest calculated probability given the values for
+   Light Sensor and Sound Sensor.
+
+   ----------------------------
+   Variable              Value
+   -------------------- -------
+   Battery                OK
+   
+   Dog Barking?           No
+   
+   Dog Bowel Trouble      Yes
+   
+   Dog Outside            Yes
+   
+   Expecting Guests       No
+   
+   Family Home            No
+   
+   Hearable Barking?      No
+   
+   Light Sensor Health    OK
+   
+   Outdoor Light          On
+   
+   Sound Sensor Health    OK
+   ----------------------------
+
+B) The answer can be found by selecting the value of "Yes" for the Family Home
+   variable, and the value of "No" for the Expecting Guests variable, then using
+   SamIam's MAP function to find the most probable values of Light Sensor and
+   Sound Sensor. Alternatively, these can be found using SamIam's MPE function,
+   or by calculating the probabilities of each node with the given variables set
+   and choosing the most probable setting of Light Sensor and Sound Sensor.
+
+   ----------------------------
+   Variable              Value
+   -------------------- -------
+   Light Sensor           Off
+   
+   Sound Sensor           Off
+   ----------------------------
+
+C) $\mathbb{Z} = \{ \text{Battery, Family Home} \}$
+
+   Choosing the variable Battery blocks the path through it between the sensors;
+   there is no other way to block this path other than including this variable in
+   $\mathbb{Z}$.
+   
+   Choosing the variable Family Home blocks the alternative path between the two
+   sensors, although there are several other variable choices that accomplish
+   the d-separation of the two sensors.
+
+D) This is a multiply-connected network as the variables
+     $$\{ \text{Family Home, Expecting Guests, Outdoor Light} \}$$
+   form a loop.

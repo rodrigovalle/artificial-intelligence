@@ -1,0 +1,2 @@
+test:
+	clisp test.lsp

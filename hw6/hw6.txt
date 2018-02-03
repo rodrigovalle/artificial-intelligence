@@ -1,0 +1,201 @@
+---
+title: Homework 6
+author: Rodrigo Valle
+---
+
+<!--
+    IMPORTANT
+
+    This file was written in Markdown + LaTeX and is best viewed as a PDF.
+    Please see the attached PDF or generate it yourself using Pandoc:
+
+       $ pandoc hw6.txt -o hw6.pdf
+-->
+
+# Question 1
+
+a) $P(A, B, B), P(x, y, z)$
+
+    $\theta = \{ x/A, y/B, z/B \}$
+
+b) $Q(y, G(A, B)), Q(G(x, x), y)$
+
+    $\bot$
+
+c) $R(x, A, z), R(B, y, z)$
+
+    $\theta = \{ x/B, y/A \}$
+
+d) $\text{Older}(\text{Father}(y), y), \text{Older}(\text{Father}(x), \text{John})$
+
+    $\theta = \{ y/\text{John}, x/\text{John} \}$
+
+e) $\text{Knows}(\text{Father}(y), y), \text{Knows}(x, x)$
+
+    $\bot$
+
+
+\pagebreak
+
+# Question 2
+
+1. John likes all kinds of food
+2. Apples are food
+3. Chicken is food
+4. Anything someone eats and isn't killed by is food
+5. If you are killed by something, you are not alive
+6. Bill eats peanuts and is still alive *
+7. Sue eats everything Bill eats
+
+a) First order logic:
+
+    1. $\forall x\ \text{Food}(x) \Rightarrow \text{Likes(John}, x)$
+    2. Food(Apples)
+    3. Food(Chicken)
+    4. $\forall x \exists y\ \text{Eats}(y, x) \land \lnot \text{Killed}(x, y) \Rightarrow \text{Food}(x)$
+    5. $\forall x \forall y\ \text{Killed}(x, y) \Rightarrow \lnot \text{Alive}(y)$
+    6. Eats(Bill, Peanuts) $\land$ Alive(Bill)
+    7. $\forall x\ \text{Eats(Bill}, x) \Rightarrow \text{Eats(Sue}, x)$
+
+b) To CNF:
+
+    1. $\lnot \text{Food}(x) \lor \text{Likes(John}, x)$
+    2. Food(Apples)
+    3. Food(Chicken)
+    4. $\lnot\text{Eats}(y, x) \lor \text{Killed}(x, y) \lor \text{Food}(x)$
+    5. $\lnot\text{Killed}(x, y) \lor \lnot\text{Alive}(y)$
+    6. Eats(Bill, Peanuts)
+    7. Alive(Bill)
+    8. $\lnot \text{Eats(Bill}, x) \lor \text{Eats(Sue}, x)$
+
+c) Prove John likes Peanuts using resolution:
+
+    ---------------------------------------------------------------------------------------------------------
+     Number   Rule                                                                  Composition
+    -------   --------------------------------------------------------------------- -------------------------
+     9        $\lnot \text{Likes(John, Peanuts)}$                                   negate conclusion
+
+     10       $\lnot \text{Food(Peanuts)}$                                          rules 1, 9
+
+     11       $\lnot \text{Eats}(y, \text{Peanuts)} \lor \text{Killed(Peanuts}, y)$ rules 4, 10
+
+     12       $\text{Killed(Peanuts, Bill)}$                                        rules 6, 11
+
+     13       $\lnot \text{Alive(Bill)}$                                            rules 5, 12
+
+     14       $\bot$                                                                rules 7, 14
+    ---------------------------------------------------------------------------------------------------------
+
+d) Use resolution to answer the question "What does Sue eat?"
+
+    --------------------------------------------------------------------
+     Number   Rule                                     Composition
+    -------   ---------------------------------------- -----------------
+     9        $\lnot \text{Eats(Sue}, x)$              negate conclusion
+
+     10       $\lnot \text{Eats(Bill}, x)$             rules 8, 9
+
+     11       $\bot, \theta = \{ x/\text{Peanuts} \}$  rules 6, 10
+    --------------------------------------------------------------------
+
+    Sue eats peanuts.
+
+e) Use resolution to answer the question "What does Sue eat?" with a modified
+   set of rules.
+
+    1. John likes all kinds of food
+    2. Apples are food
+    3. Chicken is food
+    4. Anything someone eats and isn't killed by is food
+    5. If you are killed by something, you are not alive
+    6. If you don't eat, you die
+    7. If you die, you are not alive
+    8. Bill is alive
+    9. Sue eats everything Bill eats
+
+    To first order logic:
+
+    1. $\forall x\ \text{Food}(x) \Rightarrow \text{Likes(John}, x)$
+    2. Food(Apples)
+    3. Food(Chicken)
+    4. $\forall x \exists y\ \text{Eats}(y, x) \land \lnot \text{Killed}(x, y) \Rightarrow \text{Food}(x)$
+    5. $\forall x \forall y\ \text{Killed}(x, y) \Rightarrow \lnot \text{Alive}(y)$
+    6. $\forall x\ \lnot [\exists y\ \text{Eats}(x, y)] \Rightarrow \text{Dead}(x)$
+    7. $\forall x\ \text{Dead}(x) \Rightarrow \lnot \text{Alive}(x)$
+    8. Alive(Bill)
+    9. $\forall x\ \text{Eats(Bill}, x) \Rightarrow \text{Eats(Sue}, x)$
+
+    To CNF:
+
+    1. $\lnot \text{Food}(x) \lor \text{Likes(John}, x)$
+    2. Food(Apples)
+    3. Food(Chicken)
+    4. $\lnot\text{Eats}(y, x) \lor \text{Killed}(x, y) \lor \text{Food}(x)$
+    5. $\lnot\text{Killed}(x, y) \lor \lnot\text{Alive}(y)$
+    6. $\text{Eats}(x, FoodEatenBy(x)) \lor \text{Dead}(x)$
+    7. $\lnot\text{Dead}(x) \lor \lnot \text{Alive}(x)$
+    8. Alive(Bill)
+    9. $\lnot \text{Eats(Bill}, x) \lor \text{Eats(Sue}, x)$
+
+    Proof:
+
+    --------------------------------------------------------------------
+     Number   Rule                                     Composition
+    -------   ---------------------------------------- -----------------
+     10       $\lnot \text{Eats(Sue}, x)$              negate conclusion
+
+     11       $\lnot \text{Eats(Bill}, x)$             rules 10, 9
+
+     12       $\lnot \text{Dead(Bill)}$                rules 7, 8
+
+     13       $\text{Eats(Bill, FoodEatenBy(Bill))}$   rules 12, 6
+    --------------------------------------------------------------------
+
+    Now we're stuck, we can prove that Bill eats food because he's alive, but we
+    can't continue because there's no rules that allow us to determine what food
+    Bill eats.
+
+\pagebreak
+
+# Question 3
+
+a) Graph 1 with 3 colors is not satisfiable.
+
+b) Graph 1 with 4 colors is satisfiable.
+
+c) The two SAT instances tell us that graph 1 is 4 colorable but not 3
+   colorable. We can use the result of the SAT solver to obtain a coloring for
+   graph 1:
+
+    ----------------------------------------------
+     Node   Color 1   Color 2   Color 3   Color 4
+    ------ --------- --------- --------- ---------
+     1      -1        -2        -3        4
+
+     2      -5        -6        7         -8
+
+     3      -9        10        -11       -12
+
+     4      -13       -14       15        -16
+
+     5      17        -18       -19       -20
+
+     6      -21       22        -23       -24
+
+     7      25        -26       -27       -28
+    ----------------------------------------------
+
+    This table was created directly from the results of RSAT, where each literal
+    represents giving a node a specific coloring.
+
+    More concisely, the coloring here is:
+
+    - Node 1 $\gets$ Color 4
+    - Node 2 $\gets$ Color 3
+    - Node 3 $\gets$ Color 2
+    - Node 4 $\gets$ Color 3
+    - Node 5 $\gets$ Color 1
+    - Node 6 $\gets$ Color 2
+    - Node 7 $\gets$ Color 1
+
+d) The minimum number of colors required to properly color graph 2 is 8.
